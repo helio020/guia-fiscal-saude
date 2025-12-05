@@ -1,4 +1,4 @@
-import { createClient } from "@/utils/supabase/server";
+import { createAdminClient } from "@/utils/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 import { LeadFormData, Profissao, EstagioCarreira } from "@/types/lead";
 
@@ -123,8 +123,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Cria o cliente do Supabase
-    const supabase = await createClient();
+    // Cria o cliente admin do Supabase (bypassa RLS)
+    // Usamos service_role para operações administrativas em API routes
+    const supabase = createAdminClient();
 
     // Prepara os dados para inserção
     const leadData = {

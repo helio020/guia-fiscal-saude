@@ -170,6 +170,7 @@ Crie um arquivo `.env.local` na raiz do projeto com as seguintes variáveis:
 ```env
 NEXT_PUBLIC_SUPABASE_URL=sua_url_do_supabase
 NEXT_PUBLIC_SUPABASE_ANON_KEY=sua_chave_anonima_do_supabase
+SUPABASE_SERVICE_ROLE_KEY=sua_chave_service_role_do_supabase
 ```
 
 **Como obter essas variáveis:**
@@ -177,6 +178,9 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=sua_chave_anonima_do_supabase
 1. Acesse seu projeto no Supabase
 2. Vá em Settings > API
 3. Copie a "Project URL" e a "anon public" key
+4. **Importante:** Copie também a "service_role" key (mantenha segura, nunca exponha no frontend)
+
+**⚠️ Segurança:** A `SUPABASE_SERVICE_ROLE_KEY` deve ser usada APENAS em API routes server-side. Ela bypassa o RLS e tem permissões completas no banco de dados. Nunca exponha esta chave no código do frontend ou em variáveis `NEXT_PUBLIC_*`.
 
 #### Para Edge Functions (no Dashboard do Supabase)
 
@@ -284,10 +288,11 @@ A tabela `leads` possui a seguinte estrutura:
 
 A tabela `leads` possui **Row Level Security (RLS)** habilitado para proteger os dados. As políticas configuradas são:
 
-1. **Inserção Pública (INSERT)**:
+1. **Inserção via API Route (INSERT)**:
 
-   - Qualquer pessoa pode criar um lead (necessário para a landing page funcionar)
-   - Usa a chave anônima (`anon` key) do Supabase
+   - A API route (`/api/leads`) usa a `service_role` key para inserir leads
+   - Isso bypassa o RLS e garante que a inserção funcione mesmo com RLS habilitado
+   - A `service_role` key é usada apenas server-side, nunca exposta ao frontend
 
 2. **Leitura Restrita (SELECT)**:
 
@@ -298,6 +303,13 @@ A tabela `leads` possui **Row Level Security (RLS)** habilitado para proteger os
    - Bloqueado para usuários anônimos
    - Leads não devem ser editados ou deletados após criação
    - Para editar/deletar, use o dashboard do Supabase diretamente
+
+**Por que usar service_role na API route?**
+
+Em produção, quando o RLS está habilitado, usar a chave anônima em API routes server-side pode causar erros de permissão. A solução é usar a `service_role` key que:
+- Bypassa o RLS completamente
+- É segura porque roda apenas no servidor (nunca exposta ao cliente)
+- É a prática recomendada para operações administrativas em API routes
 
 ### Como Visualizar os Leads no Supabase
 

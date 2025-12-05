@@ -47,12 +47,16 @@ Este projeto foi desenvolvido como parte de um projeto de extensão universitár
    ```env
    NEXT_PUBLIC_SUPABASE_URL=https://seu-projeto.supabase.co
    NEXT_PUBLIC_SUPABASE_ANON_KEY=sua_chave_anonima_aqui
+   SUPABASE_SERVICE_ROLE_KEY=sua_chave_service_role_aqui
    ```
    
    **Como obter as credenciais:**
    - Acesse [Supabase](https://app.supabase.com)
    - Vá em Settings > API
    - Copie a "Project URL" e a "anon public" key
+   - **Importante:** Copie também a "service_role" key (mantenha segura, nunca exponha no frontend)
+   
+   **⚠️ Segurança:** A `SUPABASE_SERVICE_ROLE_KEY` é usada apenas em API routes server-side para bypassar RLS. Nunca exponha esta chave no código do frontend.
 
 4. Configure o banco de dados:
    - Acesse o SQL Editor no Supabase
