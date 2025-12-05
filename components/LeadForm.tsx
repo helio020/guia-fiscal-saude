@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useRef } from "react";
 import { LeadFormData, Profissao, EstagioCarreira } from "@/types/lead";
 
 interface FormErrors {
@@ -26,6 +26,7 @@ export default function LeadForm() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const successRef = useRef<HTMLDivElement>(null);
 
   // Estados do Brasil para o select
   const estados = [
@@ -144,9 +145,14 @@ export default function LeadForm() {
         estagio_carreira: "Profissional em atuacao",
       });
 
-      // Scroll suave até a mensagem de sucesso
+      // Scroll suave até a mensagem de sucesso, mantendo o usuário na mesma área
       setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        if (successRef.current) {
+          successRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }
       }, 100);
     } catch (error) {
       console.error("Erro ao enviar formulário:", error);
@@ -178,7 +184,10 @@ export default function LeadForm() {
 
   if (isSuccess) {
     return (
-      <div className="bg-green-50 border-2 border-green-200 rounded-lg p-8 text-center">
+      <div
+        ref={successRef}
+        className="bg-green-50 border-2 border-green-200 rounded-lg p-8 text-center"
+      >
         <div className="mb-4">
           <svg
             className="mx-auto h-16 w-16 text-green-500"
@@ -201,6 +210,13 @@ export default function LeadForm() {
           Seus dados foram salvos com sucesso. Em breve você receberá por e-mail
           o link para baixar o guia completo.
         </p>
+        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mt-4">
+          <p className="text-sm text-yellow-800">
+            <strong>⚠️ Atenção:</strong> Verifique sua caixa de{" "}
+            <strong>spam</strong> ou <strong>lixo eletrônico</strong> caso não
+            encontre o e-mail na caixa de entrada.
+          </p>
+        </div>
       </div>
     );
   }
@@ -260,6 +276,10 @@ export default function LeadForm() {
         {errors.email && (
           <p className="mt-1 text-sm text-red-600">{errors.email}</p>
         )}
+        <p className="mt-2 text-xs text-gray-500">
+          💡 <strong>Dica:</strong> Verifique também sua caixa de spam após o
+          envio.
+        </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
