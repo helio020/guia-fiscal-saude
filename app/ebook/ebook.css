@@ -1,0 +1,180 @@
+/* Estilos para a página do ebook */
+.ebook-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: white;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  line-height: 1.8;
+  color: #333;
+}
+
+.ebook-header {
+  position: sticky;
+  top: 0;
+  background: white;
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #e5e7eb;
+  z-index: 10;
+}
+
+.print-button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.print-button:hover {
+  background: #1d4ed8;
+}
+
+.ebook-content {
+  padding: 2rem 0;
+}
+
+.ebook-content h1 {
+  font-size: 2.5rem;
+  color: #1e40af;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  border-bottom: 3px solid #2563eb;
+  padding-bottom: 0.5rem;
+}
+
+.ebook-content h2 {
+  font-size: 2rem;
+  color: #2563eb;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.ebook-content h3 {
+  font-size: 1.5rem;
+  color: #3b82f6;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.ebook-content p {
+  margin-bottom: 1rem;
+  text-align: justify;
+  font-size: 1.1rem;
+}
+
+.ebook-content ul {
+  margin: 1.5rem 0;
+  padding-left: 2rem;
+}
+
+.ebook-content ul.checklist {
+  list-style: none;
+  padding-left: 0;
+}
+
+.ebook-content li {
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+}
+
+.ebook-content li.checkbox {
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.ebook-content li.checkbox.checked {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+.ebook-content hr {
+  border: none;
+  border-top: 2px solid #e5e7eb;
+  margin: 3rem 0;
+}
+
+.ebook-content strong {
+  color: #1e40af;
+  font-weight: 600;
+}
+
+/* Estilos para impressão/PDF */
+@media print {
+  .ebook-header {
+    position: static;
+    border-bottom: none;
+    padding: 0;
+    margin-bottom: 1rem;
+  }
+
+  .print-button {
+    display: none;
+  }
+
+  .ebook-container {
+    padding: 0;
+    max-width: 100%;
+  }
+
+  .ebook-content {
+    padding: 0;
+  }
+
+  .ebook-content h1 {
+    page-break-after: avoid;
+  }
+
+  .ebook-content h2 {
+    page-break-after: avoid;
+    margin-top: 1.5rem;
+  }
+
+  .ebook-content h3 {
+    page-break-after: avoid;
+    margin-top: 1.25rem;
+  }
+
+  .ebook-content ul {
+    page-break-inside: avoid;
+  }
+
+  .ebook-content p {
+    orphans: 3;
+    widows: 3;
+  }
+
+  @page {
+    margin: 2cm;
+    size: A4;
+  }
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .ebook-container {
+    padding: 1rem;
+  }
+
+  .ebook-content h1 {
+    font-size: 2rem;
+  }
+
+  .ebook-content h2 {
+    font-size: 1.75rem;
+  }
+
+  .ebook-content h3 {
+    font-size: 1.25rem;
+  }
+}

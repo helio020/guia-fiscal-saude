@@ -24,3 +24,32 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Remover outline padrão do navegador nos inputs e selects */
+input:focus,
+select:focus {
+  outline: none;
+}
+
+/* Garantir texto escuro e visível nos inputs */
+input[type="text"],
+input[type="email"] {
+  color: #111827; /* text-gray-900 - texto escuro e visível */
+}
+
+input[type="text"]:disabled,
+input[type="email"]:disabled {
+  color: #6b7280; /* text-gray-500 */
+  cursor: not-allowed;
+}
+
+/* Melhorar visibilidade básica dos selects */
+select {
+  color: #111827; /* text-gray-900 - garante texto escuro */
+}
+
+select:disabled {
+  background-color: #f3f4f6; /* bg-gray-100 */
+  color: #6b7280; /* text-gray-500 */
+  cursor: not-allowed;
+}
